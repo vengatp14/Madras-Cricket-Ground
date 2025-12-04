@@ -1,0 +1,1744 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Meta: international standard + SEO -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Madras Cricket Ground | Astro Turf Cricket Ground Booking in Chennai</title>
+  <meta name="description" content="Madras Cricket Ground in Chennai offers world-class cricket-only facilities, astro turf and turf wickets, glow-in-the-dark cricket, practice nets, and easy online slot booking." />
+  <meta name="keywords" content="Madras Cricket Ground, cricket ground booking Chennai, astro turf cricket Chennai, glow in the dark cricket, practice nets Chennai" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 CSS (online CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --mcg-dark: #020912;
+      --mcg-green: #22e37c;
+      --mcg-green-soft: rgba(34, 227, 124, 0.25);
+      --mcg-orange: #ff9b26;
+      --mcg-light: #f5f7fb;
+      --mcg-card-bg: rgba(6, 16, 30, 0.92);
+      --mcg-border: rgba(255, 255, 255, 0.08);
+      --mcg-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #072020 0, #020912 40%, #000 100%);
+      color: #e5ecff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Global decorative background */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(34, 227, 124, 0.3) 0, transparent 55%),
+        radial-gradient(circle at 85% 10%, rgba(255, 155, 38, 0.4) 0, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(34, 227, 124, 0.3) 0, transparent 60%);
+      z-index: -2;
+    }
+
+    body::after {
+      opacity: 0.06;
+      background-image:
+        radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.16) 0, transparent 55%),
+        radial-gradient(circle at 60% 40%, rgba(19, 90, 90, 0.5) 0, transparent 55%);
+      mix-blend-mode: screen;
+    }
+
+    /* Ball loader (preloader) */
+    #mcg-preloader {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 0, #033 0, #020912 40%, #000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mcg-ball-orbit {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px dashed rgba(34, 227, 124, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: orbit-rotate 3.4s linear infinite;
+    }
+
+    .mcg-ball {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0, #ffe7d2 20%, #ff9b26 60%, #b35004 100%);
+      box-shadow:
+        0 0 15px rgba(255, 155, 38, 0.9),
+        0 0 40px rgba(255, 155, 38, 0.4);
+      position: absolute;
+      top: -7px;
+      animation: ball-bounce 0.9s ease-in-out infinite alternate;
+    }
+
+    .mcg-stump {
+      width: 8px;
+      height: 54px;
+      border-radius: 20px;
+      background: linear-gradient(to bottom, #fefefe, #fffcf5 40%, #d2c9b1 100%);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.32);
+      margin: 0 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mcg-stump::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(34, 227, 124, 0.5), transparent 60%);
+      mix-blend-mode: screen;
+    }
+
+    .mcg-stumps-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: 24px;
+      gap: 2px;
+    }
+
+    .mcg-preloader-text {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      color: rgba(229, 236, 255, 0.7);
+    }
+
+    .mcg-preloader-bar {
+      width: 160px;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mcg-preloader-bar span {
+      position: absolute;
+      inset: 0;
+      width: 45%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--mcg-green), var(--mcg-orange));
+      animation: bar-slide 1.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbit-rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes ball-bounce {
+      0% { transform: translate(-16px, 0) scale(1); }
+      100% { transform: translate(16px, 10px) scale(1.05); }
+    }
+
+    @keyframes bar-slide {
+      0% { transform: translateX(-10%); }
+      100% { transform: translateX(70%); }
+    }
+
+    /* Navbar */
+    .mcg-navbar {
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.90), rgba(2, 9, 18, 0.96));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .navbar-brand span {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .mcg-nav-link {
+      color: rgba(229, 236, 255, 0.75) !important;
+      font-weight: 500;
+      font-size: 0.92rem;
+      position: relative;
+      padding-inline: 0.9rem !important;
+    }
+
+    .mcg-nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0.1rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--mcg-green), var(--mcg-orange));
+      transform: translateX(-50%);
+      transition: width 0.25s ease;
+    }
+
+    .mcg-nav-link:hover::after,
+    .mcg-nav-link.active::after {
+      width: 60%;
+    }
+
+    .mcg-nav-cta {
+      border-radius: 999px;
+      border: 1px solid var(--mcg-green);
+      color: var(--mcg-dark);
+      background: linear-gradient(135deg, var(--mcg-green), var(--mcg-orange));
+      box-shadow:
+        0 0 20px rgba(34, 227, 124, 0.4),
+        0 0 35px rgba(255, 155, 38, 0.35);
+      font-weight: 600;
+      padding-inline: 1.3rem;
+      font-size: 0.9rem;
+    }
+
+    .mcg-nav-cta:hover {
+      color: var(--mcg-dark);
+      filter: brightness(1.06);
+    }
+
+    /* Hero section */
+    .mcg-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    #hero {
+      padding-top: 7.5rem;
+      padding-bottom: 5rem;
+    }
+
+    .mcg-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.77rem;
+      background: rgba(3, 26, 18, 0.8);
+      border: 1px solid rgba(34, 227, 124, 0.4);
+      color: var(--mcg-green);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .mcg-tag-pill i {
+      font-size: 0.9rem;
+    }
+
+    .mcg-hero-title {
+      font-size: clamp(2.3rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      text-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .mcg-hero-gradient {
+      background: linear-gradient(120deg, #ffffff, #e2ffe8, #ffe7c6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .mcg-hero-sub {
+      font-size: 0.97rem;
+      color: rgba(229, 236, 255, 0.8);
+      max-width: 540px;
+    }
+
+    .mcg-hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .mcg-badge {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: radial-gradient(circle at top left, rgba(34, 227, 124, 0.15), rgba(2, 9, 18, 0.95));
+    }
+
+    .mcg-badge i {
+      color: var(--mcg-green);
+    }
+
+    .mcg-hero-cta-main {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      border: none;
+      padding: 0.75rem 1.6rem;
+      margin-right: 0.75rem;
+      background: linear-gradient(135deg, var(--mcg-orange), #ffe18f);
+      color: #2b1705;
+      font-weight: 600;
+      font-size: 0.96rem;
+      box-shadow:
+        0 0 25px rgba(255, 155, 38, 0.7),
+        0 0 55px rgba(255, 155, 38, 0.36);
+    }
+
+    .mcg-hero-cta-main i {
+      font-size: 1.1rem;
+    }
+
+    .mcg-hero-cta-main:hover {
+      filter: brightness(1.06);
+      color: #2b1705;
+    }
+
+    .mcg-hero-cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.75rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: rgba(229, 236, 255, 0.9);
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .mcg-hero-cta-ghost i {
+      color: var(--mcg-green);
+    }
+
+    .mcg-hero-cta-ghost:hover {
+      border-color: var(--mcg-green);
+      color: #ffffff;
+    }
+
+    /* Hero right: animated ground */
+    .mcg-hero-ground {
+      position: relative;
+      border-radius: 32px;
+      padding: 1.2rem;
+      background:
+        radial-gradient(circle at 10% 0, rgba(34, 227, 124, 0.3), transparent 60%),
+        radial-gradient(circle at 90% 0, rgba(255, 155, 38, 0.35), transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.96));
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .mcg-ground-inner {
+      position: relative;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: radial-gradient(circle at 50% 0, rgba(34, 227, 124, 0.5), rgba(2, 9, 18, 0.96));
+      overflow: hidden;
+      padding: 1.4rem 1.4rem 1.8rem;
+    }
+
+    .mcg-ground-strip {
+      position: absolute;
+      inset: 50% 6%;
+      height: 76px;
+      margin-top: -38px;
+      border-radius: 120px;
+      background: repeating-linear-gradient(
+        90deg,
+        #497c30 0,
+        #497c30 10px,
+        #61923f 10px,
+        #61923f 20px
+      );
+      box-shadow:
+        0 0 0 3px rgba(10, 40, 12, 0.9),
+        0 26px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .mcg-pitch {
+      position: absolute;
+      inset: 50% 40%;
+      height: 150px;
+      margin-top: -75px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #f7f1d7, #e5d2a6);
+      box-shadow:
+        0 0 0 3px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(0, 0, 0, 0.75);
+    }
+
+    .mcg-stumps-set {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4px;
+    }
+
+    .mcg-stump-mini {
+      width: 6px;
+      height: 36px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #fafafa, #f4e9cf);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .mcg-boundary-dots {
+      position: absolute;
+      inset: 20px 12px 14px;
+      border-radius: 999px;
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      opacity: 0.7;
+    }
+
+    .mcg-hero-ball-orbit {
+      position: absolute;
+      top: 15%;
+      left: 12%;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: orbit-rotate 3.6s linear infinite;
+    }
+
+    .mcg-hero-ball {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #ffe0c3, #ff9b26);
+      box-shadow:
+        0 0 15px rgba(255, 155, 38, 0.8),
+        0 0 24px rgba(255, 155, 38, 0.4);
+    }
+
+    .mcg-bat {
+      position: absolute;
+      right: 6%;
+      bottom: 12%;
+      width: 96px;
+      height: 210px;
+      transform-origin: bottom right;
+      transform: rotate(-20deg);
+      animation: bat-swing 2.3s ease-in-out infinite;
+    }
+
+    .mcg-bat-body {
+      position: absolute;
+      inset: 18% 22% 0 24%;
+      border-radius: 12px 12px 28px 28px;
+      background: linear-gradient(135deg, #f5e0b7, #f0cb8a);
+      box-shadow:
+        0 0 18px rgba(0, 0, 0, 0.8),
+        0 0 22px rgba(255, 227, 158, 0.7);
+    }
+
+    .mcg-bat-face {
+      position: absolute;
+      inset: 24% 28% 4%;
+      border-radius: 10px 10px 22px 22px;
+      border: 2px solid rgba(206, 160, 86, 0.9);
+    }
+
+    .mcg-bat-handle {
+      position: absolute;
+      top: -2%;
+      right: 35%;
+      width: 38px;
+      height: 80px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #171f25, #05090f);
+      box-shadow:
+        0 0 10px rgba(0, 0, 0, 0.8),
+        0 0 18px rgba(34, 227, 124, 0.65);
+      border: 2px solid rgba(34, 227, 124, 0.8);
+    }
+
+    @keyframes bat-swing {
+      0% { transform: rotate(-22deg) translateY(0); }
+      40% { transform: rotate(6deg) translateY(-4px); }
+      100% { transform: rotate(-22deg) translateY(0); }
+    }
+
+    .mcg-ground-caption {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.6rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+    }
+
+    .mcg-ground-caption span {
+      color: var(--mcg-green);
+    }
+
+    .mcg-ground-footer {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.4rem;
+      font-size: 0.75rem;
+      color: rgba(229, 236, 255, 0.8);
+    }
+
+    .mcg-ground-pill {
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .mcg-glow-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--mcg-green);
+      box-shadow: 0 0 10px rgba(34, 227, 124, 0.8);
+    }
+
+    /* Section headings */
+    .mcg-section-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.75rem;
+      color: rgba(229, 236, 255, 0.65);
+    }
+
+    .mcg-section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .mcg-section-title span {
+      background: linear-gradient(120deg, #ffffff, #c8ffd8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .mcg-section-sub {
+      font-size: 0.95rem;
+      color: rgba(229, 236, 255, 0.78);
+      max-width: 640px;
+    }
+
+    /* Generic card */
+    .mcg-card {
+      background: var(--mcg-card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--mcg-border);
+      box-shadow: var(--mcg-shadow);
+      padding: 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mcg-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(34, 227, 124, 0.21) 0, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .mcg-card:hover::before {
+      opacity: 1;
+    }
+
+    .mcg-icon-pill {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      margin-bottom: 0.8rem;
+      color: var(--mcg-green);
+      box-shadow: 0 0 16px rgba(34, 227, 124, 0.4);
+    }
+
+    .mcg-card h5 {
+      font-size: 1.02rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .mcg-card p {
+      font-size: 0.88rem;
+      color: rgba(229, 236, 255, 0.8);
+    }
+
+    /* Services / features */
+    .mcg-service-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 0.75rem;
+    }
+
+    .mcg-price-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(6, 34, 16, 0.9);
+      border: 1px solid rgba(34, 227, 124, 0.6);
+      font-size: 0.75rem;
+      color: #caffdb;
+    }
+
+    /* Mission / vision / goals */
+    .mcg-split-card {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--mcg-border);
+      background: linear-gradient(120deg, rgba(2, 9, 18, 0.98), rgba(3, 17, 24, 0.98));
+    }
+
+    .mcg-split-gradient {
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 227, 124, 0.16), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(255, 155, 38, 0.2), transparent 55%);
+    }
+
+    .mcg-pill-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* CTA stripe */
+    .mcg-cta-stripe {
+      border-radius: 20px;
+      padding: 1.2rem 1.4rem;
+      background: linear-gradient(120deg, rgba(34, 227, 124, 0.1), rgba(255, 155, 38, 0.12));
+      border: 1px solid rgba(34, 227, 124, 0.5);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .mcg-cta-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    /* FAQ */
+    .mcg-accordion .accordion-item {
+      border-radius: 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      overflow: hidden;
+      background: rgba(2, 9, 18, 0.9);
+    }
+
+    .mcg-accordion .accordion-button {
+      background: transparent;
+      color: #f5f7fb;
+      font-size: 0.9rem;
+      padding-block: 0.85rem;
+    }
+
+    .mcg-accordion .accordion-button:not(.collapsed) {
+      background: radial-gradient(circle at 0 0, rgba(34, 227, 124, 0.18), transparent 55%);
+      color: #ffffff;
+      box-shadow: none;
+    }
+
+    .mcg-accordion .accordion-body {
+      font-size: 0.86rem;
+      color: rgba(229, 236, 255, 0.85);
+    }
+
+    /* Testimonials */
+    .mcg-testimonial-card {
+      border-radius: 18px;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: linear-gradient(125deg, rgba(2, 9, 18, 0.97), rgba(3, 18, 26, 0.98));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mcg-testimonial-card::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 0 0, rgba(34, 227, 124, 0.2), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .mcg-testimonial-meta {
+      font-size: 0.78rem;
+      color: rgba(229, 236, 255, 0.72);
+    }
+
+    .mcg-stars {
+      color: #ffd76a;
+      font-size: 0.9rem;
+    }
+
+    /* Contact / footer */
+    .mcg-contact-card {
+      border-radius: 16px;
+      padding: 1.4rem 1.5rem;
+      background: var(--mcg-card-bg);
+      border: 1px solid var(--mcg-border);
+    }
+
+    .mcg-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.86rem;
+    }
+
+    .mcg-contact-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--mcg-green);
+      flex-shrink: 0;
+    }
+
+    .mcg-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.4rem 0;
+      font-size: 0.8rem;
+      color: rgba(229, 236, 255, 0.7);
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(14px);
+    }
+
+    .mcg-footer a {
+      color: rgba(229, 236, 255, 0.9);
+      text-decoration: none;
+    }
+
+    .mcg-footer a:hover {
+      color: var(--mcg-green);
+    }
+
+    /* Floating call/WhatsApp */
+    .mcg-floating-actions {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.4rem;
+      z-index: 1080;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .mcg-float-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      color: #ffffff;
+      box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 22px rgba(34, 227, 124, 0.6);
+      cursor: pointer;
+    }
+
+    .mcg-float-btn.call {
+      background: linear-gradient(135deg, #1fe67b, #059f53);
+    }
+
+    .mcg-float-btn.whatsapp {
+      background: linear-gradient(135deg, #30d365, #0a9f39);
+    }
+
+    .mcg-float-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    /* FAQ / testimonial small tag */
+    .mcg-mini-tag {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(229, 236, 255, 0.7);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 991.98px) {
+      #hero {
+        padding-top: 6.5rem;
+      }
+
+      .mcg-hero-ground {
+        margin-top: 2.2rem;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .mcg-hero-title {
+        font-size: 2rem;
+      }
+
+      .mcg-cta-stripe {
+        padding-inline: 1rem;
+      }
+
+      .mcg-hero-ground {
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Ball Loader Preloader -->
+  <div id="mcg-preloader">
+    <div class="mcg-ball-orbit">
+      <div class="mcg-ball"></div>
+      <div class="mcg-stumps-wrapper">
+        <div class="mcg-stump"></div>
+        <div class="mcg-stump"></div>
+        <div class="mcg-stump"></div>
+      </div>
+    </div>
+    <div class="mcg-preloader-text">Loading your cricket ground</div>
+    <div class="mcg-preloader-bar"><span></span></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark mcg-navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#hero">
+        <span class="d-inline-flex align-items-center justify-content-center rounded-3 px-2 py-1 border border-success-subtle"
+          style="background:rgba(0,0,0,0.5);">
+          <i class="bi bi-cricket-ball-fill text-success"></i>
+        </span>
+        <span>Madras Cricket Ground</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mcgNav"
+        aria-controls="mcgNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="text-light"><i class="bi bi-list fs-3"></i></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mcgNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link active" href="#hero">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link" href="#services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link" href="#mission">Mission</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link" href="#faq">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mcg-nav-link" href="#testimonials">Testimonials</a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+            <a class="btn btn-sm mcg-nav-cta" href="#booking">
+              <i class="bi bi-calendar-check-fill me-1"></i>
+              Book Slot
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="mcg-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Left content -->
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <span class="mcg-tag-pill">
+              <i class="bi bi-cricket-ball"></i>
+              Exclusively for cricket
+            </span>
+          </div>
+          <h1 class="mcg-hero-title mb-3">
+            Welcome to <span class="mcg-hero-gradient">Madras Cricket Ground</span>
+          </h1>
+          <p class="mcg-hero-sub">
+            World international design where cricket is more than just a sport. A dedicated, cricket-only environment with a carefully prepared pitch that balances bat and ball for players of all ages.
+          </p>
+          <div class="mcg-hero-badges">
+            <div class="mcg-badge">
+              <i class="bi bi-badge-tm-fill"></i>
+              World-class Astro Turf and turf wickets. 
+            </div>
+            <div class="mcg-badge">
+              <i class="bi bi-lightbulb-fill"></i>
+              Glow-in-the-dark entertainment cricket concept.
+            </div>
+            <div class="mcg-badge">
+              <i class="bi bi-tree-fill"></i>
+              Lush greenery & exclusive cricket ambience.
+            </div>
+          </div>
+          <div class="mt-4 d-flex flex-wrap align-items-center gap-2">
+            <a href="#booking" class="mcg-hero-cta-main">
+              <i class="bi bi-calendar-event"></i>
+              Book your slot
+            </a>
+            <a href="#services" class="mcg-hero-cta-ghost">
+              <i class="bi bi-bounding-box-circles"></i>
+              View facilities & pricing
+            </a>
+          </div>
+          <div class="mt-3 small text-muted">
+            No other sports permitted – every detail optimised purely for cricket. 
+          </div>
+        </div>
+
+        <!-- Right visual ground -->
+        <div class="col-lg-6 mt-4 mt-lg-0">
+          <div class="mcg-hero-ground">
+            <div class="mcg-ground-inner">
+              <div class="mcg-boundary-dots"></div>
+              <div class="mcg-ground-strip"></div>
+              <div class="mcg-pitch"></div>
+              <div class="mcg-stumps-set">
+                <span class="mcg-stump-mini"></span>
+                <span class="mcg-stump-mini"></span>
+                <span class="mcg-stump-mini"></span>
+              </div>
+              <div class="mcg-hero-ball-orbit">
+                <div class="mcg-hero-ball"></div>
+              </div>
+              <div class="mcg-bat">
+                <div class="mcg-bat-body"></div>
+                <div class="mcg-bat-face"></div>
+                <div class="mcg-bat-handle"></div>
+              </div>
+              <div class="mcg-ground-caption">
+                65m boundary • <span>Astro Turf</span> • Turf wickets 
+              </div>
+              <div class="mcg-ground-footer">
+                <div class="mcg-ground-pill">
+                  <span class="mcg-glow-dot"></span>
+                  Glow in the dark cricket nights.
+                </div>
+                <div class="text-end">
+                  <div class="small">Numbal, Vanagaram, Chennai</div>
+                  <div class="small text-success">Book online – limited slots daily. </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 d-flex flex-wrap gap-3 small text-muted">
+            <span><i class="bi bi-geo-alt me-1 text-success"></i>113/77, Chettiyar Agaram Rd, Numbal, Vanagaram, Chennai – 600077. </span>
+            <span><i class="bi bi-telephone-outbound me-1 text-success"></i>+91 98840 15622</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services / Features -->
+  <section id="services" class="mcg-section">
+    <div class="container">
+      <div class="row align-items-end mb-4">
+        <div class="col-lg-7">
+          <div class="mcg-section-label">World class facilities</div>
+          <h2 class="mcg-section-title">
+            Play, train & compete on <span>international-style turf</span>
+          </h2>
+          <p class="mcg-section-sub">
+            From pitch dimensions to practice nets, every detail is built to help aspiring cricketers train seriously while keeping the game fun and engaging.
+          </p>
+        </div>
+        <div class="col-lg-5 text-lg-end mt-3 mt-lg-0">
+          <span class="mcg-service-tag">
+            <i class="bi bi-arrow-right-circle-fill text-success"></i>
+            Compare surface types & hourly rates below. 
+          </span>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Pitch Advantage -->
+        <div class="col-md-6 col-xl-3">
+          <div class="mcg-card h-100">
+            <div class="mcg-icon-pill">
+              <i class="bi bi-bullseye"></i>
+            </div>
+            <h5>Pitch advantage & size</h5>
+            <p>
+              Carefully prepared wicket that supports both batsmen and bowlers, with a 65-meter boundary and lush green outfield for an authentic match feel.
+            </p>
+            <div class="mt-2 small text-success">
+              <i class="bi bi-check2-circle me-1"></i>
+              Balanced for bat and ball.
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice nets -->
+        <div class="col-md-6 col-xl-3">
+          <div class="mcg-card h-100">
+            <div class="mcg-icon-pill">
+              <i class="bi bi-grid-3x3-gap-fill"></i>
+            </div>
+            <h5>Practice nets & training</h5>
+            <p>
+              Dedicated practice nets for warm-ups, skill drills, and focused coaching sessions, helping players sharpen their technique in a controlled environment.
+            </p>
+            <div class="mt-2 small text-success">
+              <i class="bi bi-people-fill me-1"></i>
+              Ideal for academies & teams.
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="col-md-6 col-xl-3">
+          <div class="mcg-card h-100">
+            <div class="mcg-icon-pill">
+              <i class="bi bi-building"></i>
+            </div>
+            <h5>Comfort & amenities</h5>
+            <p>
+              Spectator seating, ample car parking, and clean washrooms ensure a comfortable experience for both players and visitors throughout the day.
+            </p>
+            <div class="mt-2 small text-success">
+              <i class="bi bi-cup-hot me-1"></i>
+              Designed for teams & families.
+            </div>
+          </div>
+        </div>
+
+        <!-- Glow cricket -->
+        <div class="col-md-6 col-xl-3">
+          <div class="mcg-card h-100">
+            <div class="mcg-icon-pill">
+              <i class="bi bi-stars"></i>
+            </div>
+            <h5>Glow in the dark cricket</h5>
+            <p>
+              A first-of-its-kind glow in the dark entertainment cricket format where only the equipment illuminates, creating a unique, vibrant night experience.
+            </p>
+            <div class="mt-2 small text-success">
+              <i class="bi bi-gender-ambiguous me-1"></i>
+              Fun for all ages and genders.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surface types / pricing -->
+      <div class="row g-4 mt-4">
+        <div class="col-lg-4">
+          <div class="mcg-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">Turf wickets</h5>
+              <span class="mcg-price-badge">
+                <i class="bi bi-cash-coin"></i>
+                ₹999 / hour 
+              </span>
+            </div>
+            <p class="mb-2">
+              5 turf wickets with consistent bounce and carry, ideal for competitive practice and match simulations. 
+            </p>
+            <div class="small text-muted">Perfect for serious nets and team sessions.</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mcg-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">Astro turf</h5>
+              <span class="mcg-price-badge">
+                <i class="bi bi-cash-coin"></i>
+                ₹499 / hour 
+              </span>
+            </div>
+            <p class="mb-2">
+              3 Astro Turf wickets delivering a true, fast surface for white-ball practice and high-tempo matches. 
+            </p>
+            <div class="small text-muted">Great for T20 style sessions and night games.</div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="mcg-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">Matting wickets</h5>
+              <span class="mcg-price-badge">
+                <i class="bi bi-cash-coin"></i>
+                ₹699 / hour 
+              </span>
+            </div>
+            <p class="mb-2">
+              2 matting wickets with a longer run-up area (~200 ft) to help bowlers build rhythm and generate pace. 
+            </p>
+            <div class="small text-muted">Ideal for pace bowlers & extended spells.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="mcg-section">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="mcg-section-label">About us</div>
+          <h2 class="mcg-section-title">
+            Cricket-only ground with <span>exclusive design</span>
+          </h2>
+          <p class="mcg-section-sub">
+            Madras Cricket Ground is created exclusively for cricket enthusiasts, ensuring the pitch and facilities are always tuned for cricket and never shared with other sports.
+          </p>
+          <div class="row g-3 mt-2">
+            <div class="col-sm-6">
+              <div class="mcg-card h-100">
+                <div class="mcg-icon-pill">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <h5>Balanced for every player</h5>
+                <p>
+                  The square is curated to support both batters and bowlers so everyone can compete on a fair, professional-style surface.
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mcg-card h-100">
+                <div class="mcg-icon-pill">
+                  <i class="bi bi-egg-fried"></i>
+                </div>
+                <h5>From kids to seasoned players</h5>
+                <p>
+                  Young talent, corporate teams, and serious league cricketers all find an environment that allows them to practice, enjoy, and grow.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 small text-muted">
+            Surrounded by greenery and premium infrastructure, every visit becomes a day to play, connect, and achieve.
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="mcg-card h-100 mcg-split-gradient">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="mcg-pill-label">
+                <i class="bi bi-rocket-takeoff-fill text-success"></i>
+                Train • play • excel
+              </span>
+              <span class="small text-success">
+                <i class="bi bi-lightning-charge-fill me-1"></i>
+                Designed for development
+              </span>
+            </div>
+            <p class="mb-2" style="font-size:0.9rem;">
+              This spacious facility is ideal for regular practice, weekend matches, coaching academies, and friendly tournaments, with room for both high-intensity games and skill-focused sessions.
+            </p>
+            <p class="mb-2" style="font-size:0.9rem;">
+              Glow-in-the-dark cricket adds an entertainment layer, turning night sessions into a thrilling visual experience while still using a professional-grade pitch.
+            </p>
+            <p class="mb-0" style="font-size:0.9rem;">
+              Children across age groups can learn fundamentals, refine their skills, and grow under expert guidance in a safe, inspiring environment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission / Vision / Goals -->
+  <section id="mission" class="mcg-section">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col">
+          <div class="mcg-section-label">Mission • vision • goals</div>
+          <h2 class="mcg-section-title">
+            Built to <span>nurture cricketing talent</span>
+          </h2>
+          <p class="mcg-section-sub">
+            From infrastructure to scheduling, every decision is aligned with one focus: give cricketers in Chennai a dedicated, world-class space to train and perform.
+          </p>
+        </div>
+      </div>
+
+      <div class="mcg-split-card">
+        <div class="row g-0">
+          <div class="col-md-4 border-end border-opacity-25 border-light">
+            <div class="p-4">
+              <div class="mcg-pill-label mb-2">
+                <i class="bi bi-bullseye"></i>
+                Mission
+              </div>
+              <p class="small mb-0 text-light">
+                Provide an exclusive cricket-only ground with reliable, high-quality pitches so players at every level can train seriously, enjoy the game, and consistently improve.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 border-end border-opacity-25 border-light">
+            <div class="p-4">
+              <div class="mcg-pill-label mb-2">
+                <i class="bi bi-eye-fill"></i>
+                Vision
+              </div>
+              <p class="small mb-0 text-light">
+                Become Chennai’s go-to destination for Astro Turf and turf cricket, known for glow-in-the-dark innovation and a highly maintained, player-first environment.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-4">
+              <div class="mcg-pill-label mb-2">
+                <i class="bi bi-trophy-fill"></i>
+                Goals
+              </div>
+              <p class="small mb-0 text-light">
+                Support local academies, leagues, and aspiring players by offering flexible booking, multiple surface options, and a ground that feels ready for professional cricket.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-4">
+        <div class="mcg-cta-stripe">
+          <div>
+            <div class="mcg-cta-title">
+              Hit hard. Play smart. Shine bright.
+            </div>
+            <div class="small text-muted">
+              Choose your surface, pick a slot, and get your team on the turf.
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#booking" class="btn btn-sm btn-success rounded-pill">
+              <i class="bi bi-calendar-plus me-1"></i>
+              Book now
+            </a>
+            <a href="#contact" class="btn btn-sm btn-outline-light rounded-pill">
+              <i class="bi bi-telephone-forward me-1"></i>
+              Call for academy / group bookings
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA / form-like section -->
+  <section id="booking" class="mcg-section">
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-6">
+          <div class="mcg-section-label">Cricket ground booking in Chennai</div>
+          <h2 class="mcg-section-title">
+            Simple <span>slot booking</span> for teams & academies
+          </h2>
+          <p class="mcg-section-sub">
+            Compare surface options, choose your preferred timing, and confirm your slot quickly. Limited slots ensure the ground stays fresh and ready for each session.
+          </p>
+
+          <ul class="list-unstyled mt-3 small">
+            <li class="mb-2">
+              <i class="bi bi-check2-circle text-success me-2"></i>
+              Astro Turf, turf, and matting wickets available at hourly rates. 
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check2-circle text-success me-2"></i>
+              Longer run-up area for pace bowlers (~200 ft) on selected wickets. 
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check2-circle text-success me-2"></i>
+              Glow-in-the-dark entertainment cricket for special night sessions.
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <div class="mcg-contact-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0">Quick slot enquiry</h5>
+              <span class="small text-success">
+                <i class="bi bi-lightning-fill me-1"></i>
+                Fast response
+              </span>
+            </div>
+            <p class="small text-muted mb-3">
+              Share your basic details and preferred timing; the team will confirm availability and guide you on payments and rules.
+            </p>
+            <form class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label small">Name</label>
+                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Mobile number</label>
+                <input type="tel" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="+91" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Preferred surface</label>
+                <select class="form-select form-select-sm bg-dark text-light border-secondary">
+                  <option selected>Astro Turf</option>
+                  <option>Turf wicket</option>
+                  <option>Matting wicket</option>
+                  <option>Any available</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Session type</label>
+                <select class="form-select form-select-sm bg-dark text-light border-secondary">
+                  <option selected>Practice nets</option>
+                  <option>Match / tournament</option>
+                  <option>Glow-in-the-dark session</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Date</label>
+                <input type="date" class="form-control form-control-sm bg-dark text-light border-secondary" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Preferred time slot</label>
+                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="e.g. 6–8 AM" />
+              </div>
+              <div class="col-12">
+                <label class="form-label small">Additional notes</label>
+                <textarea rows="2" class="form-control form-control-sm bg-dark text-light border-secondary"
+                  placeholder="No. of players, academy / corporate, any specific requirements"></textarea>
+              </div>
+              <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
+                <button type="button" class="btn btn-sm btn-success rounded-pill">
+                  <i class="bi bi-send-fill me-1"></i>
+                  Submit enquiry
+                </button>
+                <a href="tel:+919884015622" class="btn btn-sm btn-outline-light rounded-pill">
+                  <i class="bi bi-telephone-fill me-1"></i>
+                  Call bookings: +91 98840 15622
+                </a>
+              </div>
+            </form>
+            <div class="mt-3 small text-muted">
+              For instant confirmation, call or WhatsApp directly using the floating buttons at the bottom-right.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="mcg-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="mcg-section-label">FAQ</div>
+          <h2 class="mcg-section-title">
+            Frequently asked <span>questions</span>
+          </h2>
+          <p class="mcg-section-sub">
+            Clear answers to help teams, academies, and families plan their sessions at Madras Cricket Ground with confidence.
+          </p>
+          <div class="mt-3 mcg-mini-tag">
+            <i class="bi bi-info-circle me-1"></i>
+            More details on rules & slots available on call.
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="accordion mcg-accordion" id="mcgFaq">
+            <div class="accordion-item mb-2">
+              <h2 class="accordion-header" id="faq1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Collapse" aria-expanded="true" aria-controls="faq1Collapse">
+                  Is the ground only for cricket?
+                </button>
+              </h2>
+              <div id="faq1Collapse" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#mcgFaq">
+                <div class="accordion-body">
+                  Yes. The ground is exclusively for cricket, ensuring the surface and facilities are always maintained specifically for the game with no other sports allowed.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2">
+              <h2 class="accordion-header" id="faq2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Collapse" aria-expanded="false" aria-controls="faq2Collapse">
+                  Do you offer glow-in-the-dark cricket sessions?
+                </button>
+              </h2>
+              <div id="faq2Collapse" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#mcgFaq">
+                <div class="accordion-body">
+                  Yes. A unique glow-in-the-dark entertainment cricket format is available, where only the equipment is illuminated, making night sessions highly engaging for all ages and genders.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2">
+              <h2 class="accordion-header" id="faq3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3Collapse" aria-expanded="false" aria-controls="faq3Collapse">
+                  Which amenities are available on-site?
+                </button>
+              </h2>
+              <div id="faq3Collapse" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#mcgFaq">
+                <div class="accordion-body">
+                  The ground includes practice nets, spectator seating, ample car parking, and clean washrooms so teams and families can spend long sessions comfortably.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item mb-2">
+              <h2 class="accordion-header" id="faq4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4Collapse" aria-expanded="false" aria-controls="faq4Collapse">
+                  Are children and beginners welcome?
+                </button>
+              </h2>
+              <div id="faq4Collapse" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#mcgFaq">
+                <div class="accordion-body">
+                  Absolutely. Children across different age groups can train, refine their skills, and grow under guidance on professional-grade surfaces designed for learning and improvement.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5Collapse" aria-expanded="false" aria-controls="faq5Collapse">
+                  How do I confirm or modify a booking?
+                </button>
+              </h2>
+              <div id="faq5Collapse" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#mcgFaq">
+                <div class="accordion-body">
+                  You can send an enquiry via the booking section or directly call the booking number. The team will confirm your slot, share guidelines, and help you adjust timings if required. 
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="mcg-section">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col">
+          <div class="mcg-section-label">Testimonials</div>
+          <h2 class="mcg-section-title">
+            What players <span>love about MCG</span>
+          </h2>
+          <p class="mcg-section-sub">
+            Early visitors highlight the exclusive cricket focus, pitch quality, and the memorable glow-in-the-dark sessions as stand-out features of Madras Cricket Ground.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="mcg-testimonial-card h-100">
+            <div class="mcg-stars mb-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+            </div>
+            <p class="mb-3" style="font-size:0.88rem;">
+              Excellent turf quality and a well-maintained outfield. As a club team, we appreciate how the wicket supports both pacers and batters through the innings.
+            </p>
+            <div class="fw-semibold">Local club captain</div>
+            <div class="mcg-testimonial-meta">Weekend league player • Chennai</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mcg-testimonial-card h-100">
+            <div class="mcg-stars mb-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p class="mb-3" style="font-size:0.88rem;">
+              Our academy kids love the glow-in-the-dark sessions. It breaks the routine, keeps them excited, and still allows focused practice on a serious pitch.
+            </p>
+            <div class="fw-semibold">Cricket academy coach</div>
+            <div class="mcg-testimonial-meta">Youth development • Chennai</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mcg-testimonial-card h-100">
+            <div class="mcg-stars mb-2">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p class="mb-3" style="font-size:0.88rem;">
+              Booking slots and coordinating match timings is smooth. Parking and seating are comfortable, making it easy for teams and families to spend the entire day at the ground.
+            </p>
+            <div class="fw-semibold">Corporate team organiser</div>
+            <div class="mcg-testimonial-meta">Weekend tournaments • Chennai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Footer -->
+  <section id="contact" class="mcg-section pt-0">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="mcg-contact-card h-100">
+            <div class="mcg-section-label mb-1">Get in touch</div>
+            <h3 class="h5 mb-3">Bookings & enquiries</h3>
+
+            <div class="mcg-contact-item">
+              <div class="mcg-contact-icon">
+                <i class="bi bi-telephone-fill"></i>
+              </div>
+              <div>
+                <div class="fw-semibold small mb-1">Bookings phone</div>
+                <a href="tel:+919884015622" class="d-block small text-light text-decoration-none">
+                  +91 98840 15622
+                </a>
+              </div>
+            </div>
+
+            <div class="mcg-contact-item">
+              <div class="mcg-contact-icon">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div>
+                <div class="fw-semibold small mb-1">Ground location</div>
+                <a href="https://www.google.com/maps/place/13%C2%B003'14.4%22N+80%C2%B008'45.5%22E" target="_blank"
+                  class="d-block small text-light text-decoration-none">
+                  113/77, Chettiyar Agaram Rd, Numbal, Vanagaram, Adayalampattu, Chennai – 600077. 
+                </a>
+              </div>
+            </div>
+
+            <div class="mcg-contact-item">
+              <div class="mcg-contact-icon">
+                <i class="bi bi-envelope-fill"></i>
+              </div>
+              <div>
+                <div class="fw-semibold small mb-1">Email</div>
+                <a href="mailto:madrascricketground@gmail.com" class="d-block small text-light text-decoration-none">
+                  madrascricketground@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div class="mcg-contact-item">
+              <div class="mcg-contact-icon">
+                <i class="bi bi-share-fill"></i>
+              </div>
+              <div>
+                <div class="fw-semibold small mb-1">Social</div>
+                <div class="d-flex flex-wrap gap-2 small">
+                  <a href="https://www.facebook.com/share/1KaydQ8ExV/" target="_blank"><i class="bi bi-facebook me-1"></i>Facebook</a>
+                  <a href="https://www.instagram.com/madrascricketground" target="_blank"><i class="bi bi-instagram me-1"></i>Instagram</a>
+                  <a href="https://youtube.com/@madrascricketground" target="_blank"><i class="bi bi-youtube me-1"></i>YouTube</a>
+                  <a href="https://x.com/madrascricketg" target="_blank"><i class="bi bi-twitter-x me-1"></i>Twitter</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 small text-muted">
+              Call or message to check live availability, special slots, and glow-in-the-dark event days.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-3">
+            <div class="col-6 col-md-3">
+              <div class="mcg-card h-100 text-center">
+                <div class="mcg-icon-pill mx-auto mb-2">
+                  <i class="bi bi-stopwatch-fill"></i>
+                </div>
+                <div class="small fw-semibold">Hourly booking</div>
+                <div class="small text-muted">Flexible slots</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="mcg-card h-100 text-center">
+                <div class="mcg-icon-pill mx-auto mb-2">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="small fw-semibold">Teams & academies</div>
+                <div class="small text-muted">Group friendly</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="mcg-card h-100 text-center">
+                <div class="mcg-icon-pill mx-auto mb-2">
+                  <i class="bi bi-moon-stars-fill"></i>
+                </div>
+                <div class="small fw-semibold">Night sessions</div>
+                <div class="small text-muted">Glow cricket</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="mcg-card h-100 text-center">
+                <div class="mcg-icon-pill mx-auto mb-2">
+                  <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <div class="small fw-semibold">Safe & secure</div>
+                <div class="small text-muted">Well managed</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 small text-muted">
+            All names, text, and facility details belong to Madras Cricket Ground and should be used with respect for intellectual property and brand identity.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mcg-footer">
+    <div class="container">
+      <div class="row gy-2 align-items-center">
+        <div class="col-md-6">
+          <div>
+            Copyright © 2025
+            <a href="https://madrascricketground.com" target="_blank">Madras Cricket Ground</a>. All rights reserved. 
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div>
+            Designed &amp; Developed with respect for intellectual property and modern code standards.
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating call / WhatsApp -->
+  <div class="mcg-floating-actions">
+    <a href="tel:+919884015622" class="mcg-float-btn call" title="Call Madras Cricket Ground">
+      <i class="bi bi-telephone-fill"></i>
+    </a>
+    <a href="https://wa.me/919884015622" target="_blank" class="mcg-float-btn whatsapp" title="WhatsApp Madras Cricket Ground">
+      <i class="bi bi-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Bootstrap JS (online CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Simple preloader hide
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("mcg-preloader");
+      if (preloader) {
+        preloader.style.opacity = "0";
+        preloader.style.transition = "opacity 0.4s ease";
+        setTimeout(() => preloader.remove(), 450);
+      }
+    });
+
+    // Active nav link on scroll
+    const sections = ["hero", "services", "about", "mission", "faq", "testimonials", "contact"];
+    const navLinks = document.querySelectorAll(".mcg-nav-link");
+
+    window.addEventListener("scroll", () => {
+      let current = "hero";
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 140) {
+          current = id;
+        }
+      });
+      navLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        const targetId = href ? href.replace("#", "") : "";
+        link.classList.toggle("active", targetId === current);
+      });
+    });
+  </script>
+</body>
+</html>
