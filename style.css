@@ -1216,3 +1216,18 @@ body::after {
 iframe {
     border-radius: 18px;
 }
+
+/* 1. Default padding (for desktop/larger screens) */
+.mcg-footer {
+  padding-bottom: 20px; /* A default value */
+}
+
+/* 2. Media Query for Mobile Screens */
+/* This style will only apply when the screen is 767px wide or less */
+@media screen and (max-width: 767px) {
+  .mcg-footer {
+    /* Adjust this value (e.g., 50px, 80px, 1em) as needed. 
+       This adds extra space at the very bottom of the footer. */
+    padding-bottom: 100px; 
+  }
+}
