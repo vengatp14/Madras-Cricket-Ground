@@ -31,6 +31,34 @@
   -webkit-background-clip: text; background-clip: text; color: transparent; 
 }
 
+.pricing-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Keep content above image
+.pricing-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Optional dark overlay for readability */
+/* .pricing-card-turf-v2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.75)
+  );
+  z-index: 1;
+} */ 
+
 /* Service Cards - Mobile First */
 /* .services-hero-section { perspective: 1200px; } */
 .service-card-turf, .service-card-astro, .service-card-matting {
@@ -160,14 +188,15 @@
 <body>
   <!-- Ball Loader Preloader -->
   <div id="mcg-preloader">
-    <div class="mcg-ball-orbit">
+    <!-- <div class="mcg-ball-orbit">
       <div class="mcg-ball"></div>
       <div class="mcg-stumps-wrapper">
         <div class="mcg-stump"></div>
         <div class="mcg-stump"></div>
         <div class="mcg-stump"></div>
       </div>
-    </div>
+    </div> -->
+    <img src="assets/img/logo (5).png" alt="Madras Cricket Ground Logo" class="mcg-preloader-logo">
     <div class="mcg-preloader-text">Loading your cricket ground</div>
     <div class="mcg-preloader-bar"><span></span></div>
   </div>
@@ -179,7 +208,7 @@
         <span class="d-inline-flex align-items-center justify-content-center rounded-3 px-2 py-1 border border-success-subtle"
           style="background:rgba(0,0,0,0.5);">
           <!-- <i class="bi bi-cricket-ball-fill text-success"></i> -->
-           <img src="./logo (5).png" height="15px" alt="">
+           <img src="assets/img/logo (5).png" height="15px" alt="">
         </span>
         <span>Madras Cricket Ground</span>
       </a>
@@ -226,7 +255,7 @@
           <i class="bi bi-star-fill text-warning"></i> WORLD CLASS FACILITIES
         </span>
         <h2 class="display-4 fw-bold mb-3 lh-1_2">Choose Your <span class="gradient-text-services">Perfect Surface</span></h2>
-        <p class="lead text-light-soft mb-0 px-3 px-md-0">24 Hours Bookings • Long 200ft Run-up • Professional Maintenance</p>
+        <p class="lead text-light-soft mb-0 px-3 px-md-0">24 Hours Bookings • 200ft Long Run-up • Professional Maintenance</p>
       </div>
     </div>
 
@@ -260,12 +289,14 @@
       <!-- Turf Pricing -->
       <div class="col-xl-4 col-lg-6 col-md-12">
         <div class="pricing-card-turf-v2 h-100 rounded-4 overflow-hidden shadow-pricing-xl position-relative animate-price-reveal-1">
+          <!-- <img src="assets/img/turf.avif" alt="Turf Wickets" class="pricing-bg-img"> -->
           <div class="pricing-header-turf-v2 py-5 pt-4 text-center position-relative">
             <!-- <div class="pricing-popular-badge position-absolute top-0 start-50 -translate-x-1/2 mt-n3 z-4">
               <span class="px-4 py-2 rounded-pill fw-bold bg-gradient-popular shadow-popular">🏆 POPULAR</span>
             </div> -->
             <div class="pricing-icon-turf-v2 mb-3 position-relative mx-auto">
               <i class="bi bi-grass fs-1"></i>
+              <!-- Background Image -->
             </div>
             <h3 class="pricing-name-turf-v2 fw-bold mb-3 fs-2_5 fs-md-2">Turf Wickets</h3>
             <div class="pricing-main-price-turf mb-2">
@@ -300,6 +331,7 @@
       <!-- Astro Pricing (Featured) -->
       <div class="col-xl-4 col-lg-6 col-md-12">
         <div class="pricing-card-astro-v2 h-100 rounded-4 overflow-hidden shadow-pricing-xl position-relative animate-price-reveal-2 z-pricing-highlight" style="transform: scale(1.03);">
+          <!-- <img src="assets/img/astro.jpg" alt="Turf Wickets" class="pricing-bg-img"> -->
           <!-- <div class="pricing-featured-ribbon position-absolute top-0 end-0 m-3 z-5">
             <span class="px-3 py-2 rounded-3 fw-bold bg-warning text-dark shadow-featured">⭐ RECOMMENDED</span>
           </div> -->
@@ -340,6 +372,7 @@
       <!-- Matting Pricing -->
       <div class="col-xl-4 col-lg-12 col-md-12">
         <div class="pricing-card-matting-v2 h-100 rounded-4 overflow-hidden shadow-pricing-xl position-relative animate-price-reveal-3">
+          <!-- <img src="assets/img/matting.jpg" alt="Turf Wickets" class="pricing-bg-img"> -->
           <div class="pricing-header-matting-v2 py-5 pt-4 text-center position-relative">
             <div class="pricing-icon-matting-v2 mb-3 position-relative mx-auto">
               <i class="bi bi-arrow-up-circle fs-1"></i>
@@ -517,27 +550,30 @@
             <p class="small text-white mb-3">
               Share your basic details and preferred timing; the team will confirm availability and guide you on payments and rules.
             </p>
-            <form class="row g-3">
+            <form class="row g-3" action="https://api.web3forms.com/submit" method="POST">
+              <!--ACCESS KEY-->
+              <input type="hidden" name="access_key" value="key">
+              <input type="hidden" name="subject" value="Slot Confirmation">>
               <div class="col-md-6">
                 <label class="form-label small">Name</label>
-                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
+                <input type="text"   name="Name" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Mobile number</label>
-                <input type="tel" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="+91" />
+                <input type="tel" name="Mobile number" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="+91" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Preferred surface</label>
-                <select class="form-select form-select-sm bg-dark text-light border-secondary">
-                  <option selected>Astro Turf</option>
-                  <option>Turf wicket</option>
+                <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Preferred surface">
+                  <option selected>Turf wicket</option>
+                  <option>Astro Turf</option>
                   <option>Matting wicket</option>
                   <option>Any available</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Session type</label>
-                <select class="form-select form-select-sm bg-dark text-light border-secondary">
+                <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Session type">
                   <option selected>Practice nets</option>
                   <option>Match / tournament</option>
                   <option>Glow-in-the-dark session</option>
@@ -545,15 +581,15 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Date</label>
-                <input type="date" class="form-control form-control-sm bg-dark text-light border-secondary" />
+                <input type="date"   name="Date" class="form-control form-control-sm bg-dark text-light border-secondary" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Preferred time slot</label>
-                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="e.g. 6–8 AM" />
+                <input type="text"   name="Preferred time slot" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="e.g. 6–8 AM" />
               </div>
               <div class="col-12">
                 <label class="form-label small">Additional notes</label>
-                <textarea rows="2" class="form-control form-control-sm bg-dark text-light border-secondary"
+                <textarea rows="2" class="form-control form-control-sm bg-dark text-light border-secondary" name="Additional notes"
                   placeholder="No. of players, academy / corporate, any specific requirements"></textarea>
               </div>
               <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
@@ -740,41 +776,44 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="mcgBookingForm" novalidate>
+        <form id="mcgBookingForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <!--ACCESS KEY-->
+          <input type="hidden" name="access_key" value="key">
+          <input type="hidden" name="subject" value="Slot Confirmation">
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label small">Full name *</label>
-              <input type="text" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="text"   name="Full name" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-name" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Email *</label>
-              <input type="email" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="email"  name="Email"  class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-email" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Mobile number *</label>
-              <input type="tel" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="tel" name="Mobile number" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-mobile" placeholder="+91" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Date *</label>
-              <input type="date" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="date"   name="Date" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-date" required />
             </div>
             <div class="col-md-3">
               <label class="form-label small">Start time *</label>
-              <input type="time" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="time" name="Start time" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-start" required />
             </div>
             <div class="col-md-3">
               <label class="form-label small">End time *</label>
-              <input type="time" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="time" name="End time" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-end" required />
             </div>
             <div class="col-12">
               <label class="form-label small">Surface</label>
-              <select class="form-select form-select-sm bg-black text-light border-secondary" id="bk-surface">
+              <select class="form-select form-select-sm bg-black text-light border-secondary" id="bk-surface" name="Surface">
                 <option value="Astro Turf">Astro Turf</option>
                 <option value="Turf wicket">Turf wicket</option>
                 <option value="Matting wicket">Matting wicket</option>
@@ -785,7 +824,7 @@
               <label class="form-label small">Notes</label>
               <textarea id="bk-notes" rows="2"
                         class="form-control form-control-sm bg-black text-light border-secondary"
-                        placeholder="No. of players, academy / corporate, glow-in-the-dark, etc."></textarea>
+                        placeholder="No. of players, academy / corporate, glow-in-the-dark, etc." name="Notes"></textarea>
             </div>
           </div>
           <div class="mt-3 d-flex flex-wrap gap-2 align-items-center">

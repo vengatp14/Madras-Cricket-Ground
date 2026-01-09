@@ -1,13 +1,71 @@
+//data count
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".stat-big");
+
+  counters.forEach(counter => {
+    const target = +counter.dataset.count;
+    let current = 0;
+    const increment = Math.ceil(target / 100);
+
+    const updateCount = () => {
+      current += increment;
+      if (current >= target) {
+        counter.textContent = target;
+      } else {
+        counter.textContent = current;
+        requestAnimationFrame(updateCount);
+      }
+    };
+
+    updateCount();
+  });
+});
+
+//preloader
+window.addEventListener("load", () => {
+    const loader = document.getElementById("mcg-preloader");
+
+    // minimum loader time (milliseconds)
+    const MIN_LOADING_TIME = 4500; // 2.5 seconds
+
+    setTimeout(() => {
+      loader.classList.add("hide-loader");
+    }, MIN_LOADING_TIME);
+  });
 
     // Simple preloader hide
     window.addEventListener("load", function () {
       const preloader = document.getElementById("mcg-preloader");
       if (preloader) {
         preloader.style.opacity = "0";
-        preloader.style.transition = "opacity 0.4s ease";
-        setTimeout(() => preloader.remove(), 450);
+        preloader.style.transition = "opacity 0.10s ease";
+        setTimeout(() => preloader.remove(), 1000);
       }
     });
+
+    const gallery = document.querySelector('.gallery');
+
+/* Pause on touch gallery */
+gallery.addEventListener('touchstart', () => {
+    gallery.classList.add('paused');
+});
+
+gallery.addEventListener('mousedown', () => {
+    gallery.classList.add('paused');
+});
+
+/* Resume when released */
+gallery.addEventListener('touchend', () => {
+    gallery.classList.remove('paused');
+});
+
+gallery.addEventListener('mouseup', () => {
+    gallery.classList.remove('paused');
+});
+
+gallery.addEventListener('mouseleave', () => {
+    gallery.classList.remove('paused');
+});
 
     // Active nav link on scroll
     // const sections = ["hero", "services", "about", "mission", "faq", "testimonials", "contact"];
@@ -150,3 +208,25 @@
   if (ceoSection) {
     observer.observe(ceoSection);
   }
+
+  const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImg");
+
+document.querySelectorAll(".gallery img").forEach(img => {
+    img.addEventListener("click", () => {
+        modalImg.src = img.src;
+        modal.classList.add("active");
+        document.querySelector(".gallery").classList.add("paused");
+    });
+});
+
+/* Close when mouse moves out OR click outside */
+modal.addEventListener("mousemove", () => {
+    modal.classList.remove("active");
+    document.querySelector(".gallery").classList.remove("paused");
+});
+
+modal.addEventListener("click", () => {
+    modal.classList.remove("active");
+    document.querySelector(".gallery").classList.remove("paused");
+});

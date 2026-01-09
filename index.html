@@ -23,14 +23,16 @@
 <body>
   <!-- Ball Loader Preloader -->
   <div id="mcg-preloader">
-    <div class="mcg-ball-orbit">
+  
+    <!-- <div class="mcg-ball-orbit">
       <div class="mcg-ball"></div>
       <div class="mcg-stumps-wrapper">
         <div class="mcg-stump"></div>
         <div class="mcg-stump"></div>
         <div class="mcg-stump"></div>
       </div>
-    </div>
+    </div>-->
+     <img src="assets/img/logo (5).png" alt="Madras Cricket Ground Logo" class="mcg-preloader-logo">
     <div class="mcg-preloader-text">Loading your cricket ground</div>
     <div class="mcg-preloader-bar"><span></span></div>
   </div>
@@ -42,7 +44,7 @@
         <span class="d-inline-flex align-items-center justify-content-center rounded-3 px-2 py-1 border border-success-subtle"
           style="background:rgba(0,0,0,0.5);">
           <!-- <i class="bi bi-cricket-ball-fill text-success"></i> -->
-           <img src="./logo (5).png" height="15px" alt="">
+           <img src="assets/img/logo (5).png" height="15px" alt="">
         </span>
         <span>Madras Cricket Ground</span>
       </a>
@@ -97,7 +99,7 @@
           <div class="mcg-hero-badges">
             <div class="mcg-badge">
               <i class="bi bi-badge-tm-fill"></i>
-              World-class Astro Turf and turf wickets. 
+              World-class Turf wickets and Astro Turf. 
             </div>
             <div class="mcg-badge">
               <i class="bi bi-lightbulb-fill"></i>
@@ -159,9 +161,23 @@
             </div> -->
          
            <div class="mt-3 d-flex flex-wrap gap-3 small text-white">
-            <img src="./licensed-image.jpeg" class="img-fluid rounded-5" alt="">
-            <span><i class="bi bi-geo-alt me-1 text-success"></i>113/77, Chettiyar Agaram Rd, Numbal, Vanagaram, Chennai – 600077. </span>
-            <span><i class="bi bi-telephone-outbound me-1 text-success"></i>+91 98840 15622</span>
+            <!-- <img src="assets/img/licensed-image.jpeg" class="img-fluid rounded-5" alt=""> -->
+             <!-- Carousel container -->
+              <div class="img-carousel rounded-5 overflow-hidden">
+                <div class="img-track d-flex">
+                  <img src="assets/img/banner (1).png" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/dug1.jpeg" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/grnd1.jpeg" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/match2.jpeg" class="img-fluid rounded-5" alt="">
+                  <!-- duplicate scroll -->
+                  <img src="assets/img/banner (1).png" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/dug1.jpeg" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/grnd1.jpeg" class="img-fluid rounded-5" alt="">
+                  <img src="assets/img/match2.jpeg" class="img-fluid rounded-5" alt="">
+                </div>
+              </div>
+            <!-- <span><i class="bi bi-geo-alt me-1 text-success"></i>113/77, Chettiyar Agaram Rd, Numbal, Vanagaram, Chennai – 600077. </span>
+            <span><i class="bi bi-telephone-outbound me-1 text-success"></i>+91 98840 15622</span> -->
           </div>
           </div>
         
@@ -414,7 +430,7 @@
                 Vision
               </div>
               <p class="small mb-0 text-light">
-                Become Chennai’s go-to destination for Astro Turf and turf cricket, known for glow-in-the-dark innovation and a highly maintained, player-first environment.
+                Become Chennai’s go-to destination for world-class turf cricket and Astro Turf, known for glow-in-the-dark innovation and a highly maintained, player-first environment.
               </p>
             </div>
           </div>
@@ -474,7 +490,7 @@
           <ul class="list-unstyled mt-3 small">
             <li class="mb-2">
               <i class="bi bi-check2-circle text-success me-2"></i>
-              Astro Turf, turf, and matting wickets available at hourly rates. 
+               Turf, Astro Turf, and matting wickets available at hourly rates. 
             </li>
             <li class="mb-2">
               <i class="bi bi-check2-circle text-success me-2"></i>
@@ -498,18 +514,21 @@
             <p class="small text-white mb-3">
               Share your basic details and preferred timing; the team will confirm availability and guide you on payments and rules.
             </p>
-            <form class="row g-3">
+            <form class="row g-3" action="https://api.web3forms.com/submit" method="POST">
+              <!--ACCESS KEY-->
+              <input type="hidden" name="access_key" value="key">
+              <input type="hidden" name="subject" value="Contact Enquiry">
               <div class="col-md-6">
                 <label class="form-label small">Name</label>
-                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
+                <input type="text" name="Name"  class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Mobile number</label>
-                <input type="tel" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="+91" />
+                <input type="tel"  name="Mobile number" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="+91" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Preferred surface</label>
-                <select class="form-select form-select-sm bg-dark text-light border-secondary">
+                <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Preferred surface">
                   <option selected>Astro Turf</option>
                   <option>Turf wicket</option>
                   <option>Matting wicket</option>
@@ -518,7 +537,7 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Session type</label>
-                <select class="form-select form-select-sm bg-dark text-light border-secondary">
+                <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Session type">
                   <option selected>Practice nets</option>
                   <option>Match / tournament</option>
                   <option>Glow-in-the-dark session</option>
@@ -526,16 +545,16 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Date</label>
-                <input type="date" class="form-control form-control-sm bg-dark text-light border-secondary" />
+                <input type="date" name="Date"  class="form-control form-control-sm bg-dark text-light border-secondary" />
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Preferred time slot</label>
-                <input type="text" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="e.g. 6–8 AM" />
+                <input type="text" name="Preferred time slot"  class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="e.g. 6–8 AM" />
               </div>
               <div class="col-12">
                 <label class="form-label small">Additional notes</label>
                 <textarea rows="2" class="form-control form-control-sm bg-dark text-light border-secondary"
-                  placeholder="No. of players, academy / corporate, any specific requirements"></textarea>
+                  placeholder="No. of players, academy / corporate, any specific requirements" name="Additional notes"></textarea>
               </div>
               <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
                 <button type="button" class="btn btn-sm btn-success rounded-pill">
@@ -574,7 +593,7 @@
             More details on rules & slots available on call.
           </div>
 
-          <img src="./Untitled design (10).jpg" class="img-fluid" alt="">
+          <img src="assets/img/Untitled design (10).jpg" class="img-fluid" alt="">
         </div>
         <div class="col-lg-8 my-auto  ">
           <div class="accordion mcg-accordion" id="mcgFaq">
@@ -880,41 +899,44 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="mcgBookingForm" novalidate>
+        <form id="mcgBookingForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <!--ACCESS KEY-->
+            <input type="hidden" name="access_key" value="key">
+            <input type="hidden" name="subject" value="Slot Confirmation">
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label small">Full name *</label>
-              <input type="text" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="text" name="Full name"  class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-name" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Email *</label>
-              <input type="email" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="email" name="Email" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-email" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Mobile number *</label>
-              <input type="tel" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="tel"  name="Mobile number" class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-mobile" placeholder="+91" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small">Date *</label>
-              <input type="date" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="date" name="Date"  class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-date" required />
             </div>
             <div class="col-md-3">
               <label class="form-label small">Start time *</label>
-              <input type="time" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="time" name="Start time"  class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-start" required />
             </div>
             <div class="col-md-3">
               <label class="form-label small">End time *</label>
-              <input type="time" class="form-control form-control-sm bg-black text-light border-secondary"
+              <input type="time" name="End time"  class="form-control form-control-sm bg-black text-light border-secondary"
                      id="bk-end" required />
             </div>
             <div class="col-12">
               <label class="form-label small">Surface</label>
-              <select class="form-select form-select-sm bg-black text-light border-secondary" id="bk-surface">
+              <select class="form-select form-select-sm bg-black text-light border-secondary" id="bk-surface" name="Surface">
                 <option value="Astro Turf">Astro Turf</option>
                 <option value="Turf wicket">Turf wicket</option>
                 <option value="Matting wicket">Matting wicket</option>
@@ -925,7 +947,7 @@
               <label class="form-label small">Notes</label>
               <textarea id="bk-notes" rows="2"
                         class="form-control form-control-sm bg-black text-light border-secondary"
-                        placeholder="No. of players, academy / corporate, glow-in-the-dark, etc."></textarea>
+                        placeholder="No. of players, academy / corporate, glow-in-the-dark, etc." name="Notes"></textarea>
             </div>
           </div>
           <div class="mt-3 d-flex flex-wrap gap-2 align-items-center">
@@ -943,8 +965,6 @@
   </div>
 </div>
 
-
-<!-- Mobile Sticky Bottom Navigation -->
 <!-- Mobile Sticky Bottom Navigation - Updated with Gallery -->
 <nav class="mcg-mobile-nav d-lg-none fixed-bottom">
   <div class="container-fluid px-3 py-2">
@@ -990,7 +1010,22 @@
   <!-- Bootstrap JS (online CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="app.js"></script>
- 
+<script>
+  //hero image carousel
+const track = document.querySelector('.img-track');
+let pos = 0;
+
+function slide() {
+  pos += 0.5;                       
+  if (pos >= track.scrollWidth / 2) pos = 0;
+  track.style.transform = `translateX(-${pos}px)`;
+  requestAnimationFrame(slide);
+}
+
+slide();
+
+
+</script>
 
 </body>
 </html>
