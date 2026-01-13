@@ -295,7 +295,7 @@
               <span class="px-4 py-2 rounded-pill fw-bold bg-gradient-popular shadow-popular">🏆 POPULAR</span>
             </div> -->
             <div class="pricing-icon-turf-v2 mb-3 position-relative mx-auto">
-              <i class="bi bi-grass fs-1"></i>
+              <i class="bi bi-hand-index fs-1"></i>
               <!-- Background Image -->
             </div>
             <h3 class="pricing-name-turf-v2 fw-bold mb-3 fs-2_5 fs-md-2">Turf Wickets</h3>
@@ -552,8 +552,9 @@
             </p>
             <form class="row g-3" action="https://api.web3forms.com/submit" method="POST">
               <!--ACCESS KEY-->
-              <input type="hidden" name="access_key" value="key">
-              <input type="hidden" name="subject" value="Slot Confirmation">>
+              <input type="hidden" name="access_key" value="7ca475e6-0b66-41ed-9b2f-15f11dcce486">
+              <input type="hidden"  name="subject" value="Slot Confirmation">
+              <input type="hidden" name="redirect" value="https://madrascricketground.com/services" />
               <div class="col-md-6">
                 <label class="form-label small">Name</label>
                 <input type="text"   name="Name" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Player / team name" />
@@ -565,18 +566,18 @@
               <div class="col-md-6">
                 <label class="form-label small">Preferred surface</label>
                 <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Preferred surface">
-                  <option selected>Turf wicket</option>
-                  <option>Astro Turf</option>
-                  <option>Matting wicket</option>
-                  <option>Any available</option>
+                  <option  value="Turf wicket" selected>Turf wicket</option>
+                  <option value="Astro Turf">Astro Turf</option>
+                  <option value="Matting wicket">Matting wicket</option>
+                  <option value="Any available">Any available</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label small">Session type</label>
                 <select class="form-select form-select-sm bg-dark text-light border-secondary" name="Session type">
-                  <option selected>Practice nets</option>
-                  <option>Match / tournament</option>
-                  <option>Glow-in-the-dark session</option>
+                  <option value="Practice nets" selected>Practice nets</option>
+                  <option value="Match / tournament">Match / tournament</option>
+                  <option value="Glow-in-the-dark session">Glow-in-the-dark session</option>
                 </select>
               </div>
               <div class="col-md-6">
@@ -593,7 +594,7 @@
                   placeholder="No. of players, academy / corporate, any specific requirements"></textarea>
               </div>
               <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
-                <button type="button" class="btn btn-sm btn-success rounded-pill">
+                <button type="submit" class="btn btn-sm btn-success rounded-pill">
                   <i class="bi bi-send-fill me-1"></i>
                   Submit enquiry
                 </button>
@@ -753,7 +754,7 @@
     <a href="tel:+919884015622" class="mcg-float-btn call" title="Call Madras Cricket Ground">
       <i class="bi bi-telephone-fill"></i>
     </a>
-    <a href="https://wa.me/919884015622" target="_blank" class="mcg-float-btn whatsapp" title="WhatsApp Madras Cricket Ground">
+    <a href="https://wa.me/919884015622?text=Hey%20can%20we%20book" target="_blank" class="mcg-float-btn whatsapp" title="WhatsApp Madras Cricket Ground">
       <i class="bi bi-whatsapp"></i>
     </a>
   </div>
@@ -778,8 +779,9 @@
       <div class="modal-body">
         <form id="mcgBookingForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
           <!--ACCESS KEY-->
-          <input type="hidden" name="access_key" value="key">
-          <input type="hidden" name="subject" value="Slot Confirmation">
+          <input type="hidden" name="access_key" value="7ca475e6-0b66-41ed-9b2f-15f11dcce486">
+          <input type="hidden" id="formSubject" name="subject" value="Slot Confirmation">
+          <input type="hidden" name="redirect" value="https://madrascricketground.com/services" />
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label small">Full name *</label>
@@ -842,9 +844,7 @@
   </div>
 </div>
 
-
 <!-- Mobile Sticky Bottom Navigation -->
-<!-- Mobile Sticky Bottom Navigation - Updated with Gallery -->
 <nav class="mcg-mobile-nav d-lg-none fixed-bottom">
   <div class="container-fluid px-3 py-2">
     <ul class="nav nav-pills nav-fill mb-0" id="mcgBottomNav">
@@ -889,7 +889,69 @@
   <!-- Bootstrap JS (online CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="app.js"></script>
- 
+<script>
+ //slot
+document.addEventListener("DOMContentLoaded", () => {
+
+  const forms = document.querySelectorAll("form[action*='web3forms']");
+
+  forms.forEach(form => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nameInput =
+        form.querySelector('[name="Full name"]') ||
+        form.querySelector('[name="Name"]');
+
+      const subjectInput = form.querySelector('input[name="subject"]');
+      const redirectInput = form.querySelector('input[name="redirect"]');
+
+      const name = nameInput ? nameInput.value.trim() : "";
+
+      // Set subject
+      if (subjectInput) {
+        subjectInput.value = name
+          ? `Slot Confirmation - ${name}`
+          : "Slot Confirmation";
+      }
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+          const modalEl = form.closest(".modal");
+          if (modalEl) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+          }
+
+          const redirectURL = redirectInput
+            ? redirectInput.value
+            : window.location.href;
+
+          window.location.href = redirectURL;
+
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+
+      } catch (error) {
+        alert("Network error. Please try again later.");
+      }
+    });
+  });
+
+});
+
+</script>
 
 </body>
 </html>

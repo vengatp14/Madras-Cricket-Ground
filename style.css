@@ -191,7 +191,9 @@ body::after {
     100% {
         transform: translateX(70%);
     }
-} 
+}
+
+
 
 /* Navbar */
 .mcg-navbar {
@@ -692,6 +694,28 @@ body::after {
     color: #caffdb;
 }
 
+.pricing-icon-turf-v2 {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: #6ee7b7; /* soft green accent */
+  background: rgba(255, 255, 255, 0.03);
+
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.pricing-icon-turf-v2 i {
+  font-size: 26px;
+}
+
+
 /* Mission / vision / goals */
 .mcg-split-card {
     border-radius: 18px;
@@ -1166,6 +1190,38 @@ body::after {
     }
 }
 
+/* Dark input base */
+input[type="date"],
+input[type="time"] {
+  background-color: #000;       
+  color: #fff;                 
+  border: 1px solid #ffc107;    
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.875rem;
+  transition: 0.3s ease;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+  outline: none;
+  border-color: #ffb703;
+  box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.25); 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);  
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+
 .gallery span {
     position: absolute;
     top: 0;
@@ -1294,7 +1350,6 @@ iframe {
     border-radius: 18px;
 }
 
-/* 1. Default padding (for desktop/larger screens) */
 .mcg-footer {
   padding-bottom: 20px; /* A default value */
 }

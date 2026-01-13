@@ -230,3 +230,64 @@ modal.addEventListener("click", () => {
     modal.classList.remove("active");
     document.querySelector(".gallery").classList.remove("paused");
 });
+
+//slot
+document.addEventListener("DOMContentLoaded", () => {
+
+  const forms = document.querySelectorAll("form[action*='web3forms']");
+
+  forms.forEach(form => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nameInput =
+        form.querySelector('[name="Full name"]') ||
+        form.querySelector('[name="Name"]');
+
+      const subjectInput = form.querySelector('input[name="subject"]');
+      const redirectInput = form.querySelector('input[name="redirect"]');
+
+      const name = nameInput ? nameInput.value.trim() : "";
+
+      // Set subject
+      if (subjectInput) {
+        subjectInput.value = name
+          ? `Slot Confirmation - ${name}`
+          : "Slot Confirmation";
+      }
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+          const modalEl = form.closest(".modal");
+          if (modalEl) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+          }
+
+          const redirectURL = redirectInput
+            ? redirectInput.value
+            : window.location.href;
+
+          window.location.href = redirectURL;
+
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+
+      } catch (error) {
+        alert("Network error. Please try again later.");
+      }
+    });
+  });
+
+});
